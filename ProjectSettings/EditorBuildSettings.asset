@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
+    path: Assets/Scenes/Simple Start.unity
     guid: f03bfa417f7d77d40802f306eb41d42d
   - enabled: 1
-    path: Assets/Scenes/Level2.unity
+    path: Assets/Scenes/Easy Manuevers.unity
     guid: 6a868180e6d3707459dc5be247d2f0c6
+  - enabled: 1
+    path: Assets/Scenes/Through the Gaps.unity
+    guid: 5554944a9b748224089e39f84769e527

@@ -19,13 +19,13 @@ public class Rocket : MonoBehaviour {
     [SerializeField] ParticleSystem successParticles;
     [SerializeField] ParticleSystem deathParticles;
 
+    bool collisionsDisabled = false;
     protected bool showJet = true;
 
     Rigidbody rigidBody;
     AudioSource audioSource;
 
-    enum State { Alive, Dying, Transcending  }
-    State state = State.Alive;
+    bool isTransitioning = false;
 
 	// Use this for initialization
 	void Start () {
@@ -38,20 +38,42 @@ public class Rocket : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         // todo stop sound on death
-        if (state == State.Alive)
+        if (!isTransitioning)
         {
             RespondToThrustInput();
             RespondToRotateInput();
         }
 
+        if (Debug.isDebugBuild)
+        {
+            RespondToDebugKeys();
+        }
+        
     }
 
+    private void RespondToDebugKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadNextLevel();
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            collisionsDisabled = !collisionsDisabled;
 
-  
+        }
+    }
+
+    private void LoadNextLevel()
+    {
+
+        SceneManager.LoadScene(1);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        
-        if (state != State.Alive) {return;}
+
+        if (isTransitioning || collisionsDisabled) { return; }
 
         switch (collision.gameObject.tag)
         {
@@ -68,7 +90,7 @@ public class Rocket : MonoBehaviour {
 
     private void StartDeathSequence()
     {
-        state = State.Dying;
+        isTransitioning = true;
         audioSource.Stop();
 
         //audioSource.PlayOneShot(explosion);
@@ -81,7 +103,7 @@ public class Rocket : MonoBehaviour {
 
     private void StartSuccessSequence()
     {
-        state = State.Transcending;
+        isTransitioning = true;
         audioSource.Stop();
         audioSource.PlayOneShot(levelComplete);
         successParticles.Play();

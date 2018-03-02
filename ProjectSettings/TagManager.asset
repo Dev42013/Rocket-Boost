@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Friendly
   - Fuel
+  - Capsule
+  - Pill
+  - Score
   layers:
   - Default
   - TransparentFX

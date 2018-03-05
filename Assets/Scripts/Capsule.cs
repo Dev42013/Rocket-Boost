@@ -8,7 +8,7 @@ public class Capsule : MonoBehaviour {
     [SerializeField] AudioClip collect;
 
     AudioSource audioSource;
-
+    ScoreManager scoreBoard;
 
     private Renderer rend;
 
@@ -16,21 +16,25 @@ public class Capsule : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player")
         {
-            rend.enabled = false;
-            audioSource.PlayOneShot(collect);
-
-   
-
-            
-            Destroy(gameObject, 0.5f);
+            CollectPill();
         }
+    }
+
+    private void CollectPill()
+    {
+        rend.enabled = false;        // turn off visibility of the pill
+        audioSource.PlayOneShot(collect);
+
+        
+
+        Destroy(gameObject, 0.5f);       // destroy the pill in 0.5 s
     }
 
     // Use this for initialization
     void Start () {
         audioSource = GetComponent<AudioSource>();
 
-        rend = GetComponent<Renderer>();
+        rend = GetComponent<Renderer>();    // reference the renderer
         rend.enabled = true;
 	}
 	
